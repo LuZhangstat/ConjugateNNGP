@@ -20,6 +20,13 @@ Structure
 +-- compare:  Code for calculating KL-D and RMSPE for all models
 
 
+├── ...
+├── test                    # Test files (alternatively `spec` or `tests`)
+│   ├── benchmarks          # Load and stress tests
+│   ├── integration         # End-to-end, integration tests (alternatively `e2e`)
+│   └── unit                # Unit tests
+
+
 #### data
 
 * Generate simulation data under folder "simdata"
