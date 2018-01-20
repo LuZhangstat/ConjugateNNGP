@@ -1,54 +1,28 @@
 
 Structure
 ------------------
-+-- data
-|            +-- simdata: Generate simulation data by "simdata.R"
-|            +-- buildNN: Build Matrices containing Nearest Neighbor informations for NNGP through
-|                                 "buildNNMatrics.R"
-|
-+-- projects: R code files for response full GP and NNGP, latent full GP and NNGP.
-|                   The corresponding stan codes are under folder "src"
-|
-+-- src: stan code files for response full GP and NNGP, latent full GP and NNGP
-|
-+-- conj_models:
-|           +-- functions.R: functions needed in "samplew_model1&2.R"
-|           +-- spNNGPCV.R: code for obtaining point estimates of fixed parameters using cross-validation
-|           +-- samplew_model1.R & samplew_model1.R:
-|                code files for sampling latent process by conjugate latent NNGP models
-|
-+-- compare:  Code for calculating KL-D and RMSPE for all models
-
-
-├── ...
-├── test                    # Test files (alternatively `spec` or `tests`)
-│   ├── benchmarks          # Load and stress tests
-│   ├── integration         # End-to-end, integration tests (alternatively `e2e`)
-│   └── unit                # Unit tests
-
-
-#### data
-
-* Generate simulation data under folder "simdata"
-
-* Build Matrices containing Nearest Neighbor informations for NNGP under folder "sorted_x_order"
-
-#### projects
-
-* This folder provides code for response full GP and NNGP, latent GP and NNGP. The required stan code are under folder "src"
-
-#### conj_models
-
-* This folder provides code for sampling latent process by conjugate latent NNGP models
-
-#### compare
-
-* Provide code for calculating KL-D and RMSPE
++-- data<br />
+|            +-- simdata: Generate simulation data by "simdata.R"<br />
+|            +-- buildNN: Build Matrices containing Nearest Neighbor informations for NNGP through<br />
+|                                 "buildNNMatrics.R"<br />
+|<br />
++-- projects: R code files for response full GP and NNGP, latent full GP and NNGP.<br />
+|                   The corresponding stan codes are under folder "src"<br />
+|<br />
++-- src: stan code files for response full GP and NNGP, latent full GP and NNGP<br />
+|<br />
++-- conj_models:<br />
+|           +-- functions.R: functions needed in "samplew_model1&2.R"<br />
+|           +-- spNNGPCV.R: code for obtaining point estimates of fixed parameters using cross-validation<br />
+|           +-- samplew_model1.R & samplew_model1.R:<br />
+|                code files for sampling latent process by conjugate latent NNGP models<br />
+|<br />
++-- compare:  Code for calculating KL-D and RMSPE for all models<br />
 
 
 Notes
 ---------
-
+* The recommeded Stan code for NNGP is available through [Stan case study](http://mc-stan.org/users/documentation/case-studies/nngp.html)
 
 
 
