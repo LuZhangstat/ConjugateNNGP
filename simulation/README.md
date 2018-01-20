@@ -2,11 +2,11 @@
 Structure
 ------------------
 
-+--#### data
+#### data
 |       +--     simdata: Generate simulation data by "simdata.R"
 |       +--     buildNN: Build Matrices containing Nearest Neighbor informations for NNGP through "buildNNMatrics.R"
 |
-+-- #### projects: R code files for response full GP and NNGP, latent full GP and NNGP.
+#### projects: R code files for response full GP and NNGP, latent full GP and NNGP.
 |                   The corresponding stan codes are under folder "src"
 |
 +-- src: stan code files for response full GP and NNGP, latent full GP and NNGP
