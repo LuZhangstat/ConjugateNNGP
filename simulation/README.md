@@ -2,18 +2,21 @@
 Structure
 ------------------
 
-+--data
-|       +-- simdata: Generate simulation data by "simdata.R"
-|       +-- buildNN: Build Matrices containing Nearest Neighbor informations for NNGP through "buildNNMatrics.R"
++--#### data
+|       +--     simdata: Generate simulation data by "simdata.R"
+|       +--     buildNN: Build Matrices containing Nearest Neighbor informations for NNGP through "buildNNMatrics.R"
 |
-+--projects: R code files for response full GP and NNGP, latent full GP and NNGP. The corresponding stan codes are under folder "src"
++-- #### projects: R code files for response full GP and NNGP, latent full GP and NNGP.
+|                   The corresponding stan codes are under folder "src"
 |
 +-- src: stan code files for response full GP and NNGP, latent full GP and NNGP
 |
 +-- conj_models:
-|       +-- samplew_model1.R & samplew_model1.R: code files for sampling latent process by conjugate latent NNGP models
+|       +-- samplew_model1.R & samplew_model1.R:
+|                code files for sampling latent process by conjugate latent NNGP models
 |       +-- functions.R: functions needed in "samplew_model1&2.R"
 |       +-- spNNGPCV.R: code for obtaining point estimates of fixed parameters using cross-validation
+|
 +-- compare:  Code files for calculating KL-D and RMSPE of all models
 
 
@@ -25,7 +28,7 @@ Structure
 
 #### projects
 
-* This folder provides code for response GP and NNGP, latent GP and NNGP. The required stan code are under folder "src"
+* This folder provides code for response full GP and NNGP, latent GP and NNGP. The required stan code are under folder "src"
 
 #### conj_models
 
