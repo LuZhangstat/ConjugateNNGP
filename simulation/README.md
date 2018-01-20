@@ -2,6 +2,19 @@
 Structure
 ------------------
 
+|Folder Name |       |          |
+|:------ |:----------- |:----------- |
+|data|                    |                      |
+|       |simdata: |Generate simulation data by "simdata.R"|
+|       |buildNN: |Build Matrices containing Nearest Neighbor informations for NNGP through "buildNNMatrics.R"|
+|projects:|R code files for response full GP and NNGP, latent full GP and NNGP. |
+|               |The corresponding stan codes are under folder "src"|
+|asym_sim|  Simulations in section 4.3 "Comparison of response and latent process models"| |
+|SST_study| Sea Surface Temperature (SST) data Analysis | |
+
+
+
+
 #### data
 |       +--     simdata: Generate simulation data by "simdata.R"
 |       +--     buildNN: Build Matrices containing Nearest Neighbor informations for NNGP through "buildNNMatrics.R"
