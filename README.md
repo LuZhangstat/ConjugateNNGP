@@ -2,7 +2,8 @@
 Intro
 ---------
 The code files of the analyses in "Practical Bayesian Inference for Massive Spatial Data On Modest Computing Environments"
-|Name |    |
+
+|Name |                 |
 |:------ |:----------- |
 |SST_study| Sea Surface Temperature (SST) data Analysis |
 |asym_sim|  Simulations in section 4.3 "Comparison of response and latent process models"|
