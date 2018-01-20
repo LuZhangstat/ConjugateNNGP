@@ -2,7 +2,7 @@
 Structure
 ------------------
 +-- data<br />
-|   &nbsp;&nbsp;        +-- simdata_num:
+|   &nbsp;&nbsp;        +-- simdata_num:<br />
 |   &nbsp;&nbsp;   &nbsp;&nbsp;  &nbsp;&nbsp;  &nbsp;&nbsp;  +-- simdata_num.R:
 Generate simulation data<br />
 |   &nbsp;&nbsp;   &nbsp;&nbsp;  &nbsp;&nbsp;  &nbsp;&nbsp;  +-- buildNN_num.R:
