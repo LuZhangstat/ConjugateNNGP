@@ -1,5 +1,4 @@
-# set the working directory below:
-#setwd("/Users/luzhang/Documents/Biostats/research/bitbucket/simulation_paper/stan_paper")
+setwd("") # set to the path of ConjugateNNGP
 rm(list = ls())
 load("./data/simdata_4/nngp_5_4.RData")
 
@@ -28,7 +27,7 @@ samples <- stan(
   seed = 1
 )
 
-save(samples, file = "./results/sim4/model1_nngp_5")
+save(samples, file = "./results/sim4/response_nngp_5")
 
 
 

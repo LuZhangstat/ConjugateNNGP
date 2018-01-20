@@ -1,4 +1,4 @@
-/* NNGP with w */
+/* latent NNGP */
 
 functions{
 real nngp_w_lpdf(vector w_r, real sigmasq, real phi, matrix neardist, matrix neardistM,

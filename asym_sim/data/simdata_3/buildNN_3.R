@@ -1,4 +1,4 @@
-setwd("H:/research/proj1")
+setwd("") # set to the path of ConjugateNNGP
 setwd("./asym_sim/data/simdata_3")
 rm(list = ls())
 source("../NNMatrix.R")
@@ -12,9 +12,7 @@ cov.model <- "exponential"
 theta.alpha <- c((ap + bp) / 2, bt / bs)
 names(theta.alpha) <- c("phi", "alpha")
 
-m.c <- spConjNNGP(Y ~ X[, 2], 
-                  coords= coords, 
-                  n.neighbors = M,
+m.c <- spConjNNGP(Y ~ X[, 2], coords= coords, n.neighbors = M,
                   theta.alpha = theta.alpha, k.fold = 1,
                   n.omp.threads = 2, return.neighbors = T,
                   sigma.sq.IG = sigma.sq.IG, cov.model = cov.model)

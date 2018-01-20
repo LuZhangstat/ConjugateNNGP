@@ -1,5 +1,4 @@
-# set the working directory below:
-#setwd("H:/research/proj1/asym_sim")
+setwd("") # set to the path of ConjugateNNGP
 rm(list = ls())
 load("./data/simdata_3/nngp_5_3.RData")
 
@@ -32,7 +31,7 @@ samples_w <- stan(
 )
 
 #stan_trace(samples_w)
-save(samples_w, file = "./results/sim3/model2_nngp_5")
+save(samples_w, file = "./results/sim3/latent_nngp_5")
 
 
 

@@ -1,4 +1,4 @@
-/* kappa_p_1 is (tausq / sigmasq) + 1 */
+/* response NNGP */
 
 functions{
 real nngp_lpdf(vector Y, matrix X, vector beta, real sigmasq, real tausq,
@@ -105,14 +105,7 @@ model{
     Y ~ nngp(X, beta, sigmasq, tausq, phi, neardist, neardistM, nearind, N, M);
 }
 
-/*
-generated quantities {
-    vector[N] log_lik;
-    for (i in 1:N){
-        log_lik[i] <- normal_lpdf(Y[i] |beta[1] + X[i, 2] * beta[2], sqrt(tau^2 + sigma^2));
-    }
-}
-*/
+
 
 
 

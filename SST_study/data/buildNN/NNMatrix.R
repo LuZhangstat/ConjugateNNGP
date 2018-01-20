@@ -37,9 +37,7 @@ NNMatrix <- function(N, coords.ord, n.indx){
     neardistM <- t(sapply(1: (N - 1), get_neardistM, neighbor_dist))
     neardist <- t(sapply(1: (N - 1), get_neardist, neighbor_dist))
     
-    return(
-      list(nearind = nearind, neardistM = neardistM,
-           neardist = neardist))
+    return(list(nearind = nearind, neardistM = neardistM, neardist = neardist))
 }
 
 
