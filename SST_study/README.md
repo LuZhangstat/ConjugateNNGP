@@ -8,7 +8,7 @@ Structure
 |<br />
 +-- projects: R code files for response NNGP, model1 and model2.<br />
 |   &nbsp;&nbsp;&nbsp;&nbsp;     +-- samplew_model1.R & samplew_model1.R. <br />
-|   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   code files for sampling latent process by conjugate latent NNGP models<br />
+|   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    code files for sampling latent process by conjugate latent NNGP models<br />
 |   &nbsp;&nbsp;&nbsp;&nbsp;       +-- spNNGPCV.R: code for obtaining point estimates of fixed parameters using cross-validation<br />
 |   &nbsp;&nbsp;&nbsp;&nbsp;       +-- functions.R: functions needed in "samplew_model1&2.R"<br />
 |   &nbsp;&nbsp;&nbsp;&nbsp;       +-- nngp. R: R code for response NNGP, the corresponding stan codes are under folder "src"<br />
