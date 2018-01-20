@@ -9,7 +9,7 @@ Structure
 +-- projects: R code files for response full GP and NNGP, latent full GP and NNGP.<br />
 |    &nbsp; &nbsp; &nbsp;  &nbsp;      The corresponding stan codes are under folder "src"<br />
 |<br />
-+-- src: stan code files for response full GP and NNGP, latent full GP and NNGP<br />
++-- src: stan code files for conducting response full GP and NNGP, latent full GP and NNGP<br />
 |<br />
 +-- conj_models:<br />
 |       &nbsp;&nbsp;      +-- functions.R: functions needed in "samplew_model1&2.R"<br />
