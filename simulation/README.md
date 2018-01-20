@@ -14,7 +14,7 @@ Structure
 +-- conj_models:<br />
 |       &nbsp;&nbsp;      +-- functions.R: functions needed in "samplew_model1&2.R"<br />
 |       &nbsp;&nbsp;      +-- spNNGPCV.R: code for obtaining point estimates of fixed parameters using cross-validation<br />
-|       &nbsp; &nbsp;     +-- samplew_model1.R & samplew_model1.R:<br />
+|       &nbsp; &nbsp;     +-- samplew_model1.R & samplew_model1.R. <br />
 |       &nbsp;    &nbsp;  &nbsp; &nbsp;    code files for sampling latent process by conjugate latent NNGP models<br />
 |<br />
 +-- compare:  Code for calculating KL-D and RMSPE for all models<br />
