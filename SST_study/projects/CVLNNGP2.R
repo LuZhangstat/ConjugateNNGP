@@ -14,8 +14,8 @@ source("./projects/util.R") # util.R in package spNNGP for rmspe and crps
 ## Parameters
 sigma.sq.IG <- c(as, bs)
 cov.model <- "exponential"
-phi.deltasq <- as.matrix(expand.grid(length(seq(3, 21, by = 2)), 
-                                     seq(0.001, 0.02, by = 0.001)))
+phi.deltasq <- as.matrix(expand.grid(seq(3, 21, by = 2),
+                                     seq(0.001, 0.02, by = 0.002)))
 colnames(phi.deltasq) <- c("phi", "deltasq")
 
 k.fold = 5; g <- nrow(phi.deltasq)
@@ -160,13 +160,13 @@ for (i in 1:k.fold){
        crps(Y.ho, Y.ho.p@x, sigmasq * D_ho)
 
     k.fold.scores[j, "rmspe"] <- k.fold.scores[j, "rmspe"] + 
-      rmspe(Y.ho, Y.ho.m@x)
+      rmspe(Y.ho, Y.ho.p@x)
     
     cat("\n", i, "th folder,", j, "th phi and deltasq, use time ", 
         (proc.time() - t)[3])
   }
 }
 
-save(file = "./data/data/CVscores2.RData", 
-          list = c("k.fold.scores"))
+save(file = "./results/CVscores2.RData",
+          list = c("k.fold.scores", "phi.deltasq"))
 
