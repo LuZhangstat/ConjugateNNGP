@@ -1,4 +1,4 @@
-
+setwd("/Users/luzhang/Documents/github/ConjugateNNGP")
 setwd("./simulation/data/simdata")
 rm(list = ls())
 library(fields)

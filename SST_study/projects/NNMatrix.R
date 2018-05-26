@@ -3,7 +3,8 @@ library(spNNGP)       # Build neighbor index
 #### distance matrix for location i and its neighbors ####
 i_dist <- function(i, neighbor_index, s){
   dist(s[c(i, neighbor_index[[i - 1]]), ])
-}	
+}
+
 ho_dist <- function(i, nn.ind, coords) c(dist(coords[nn.ind[i, ], ]))
 
 get_NN_distM <- function (ind, ind_distM_d, M) {

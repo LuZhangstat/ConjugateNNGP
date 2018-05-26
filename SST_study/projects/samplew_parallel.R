@@ -55,14 +55,14 @@ b_star <- b + 0.5 * sum((Y_star - (X_star %*% gamma_hat))^2)
 a_star <- a + 0.5 * N
 
 ## storage for posterior samples sigmasq, beta, and w ##
-l <- 120
+l <- 300
 
 t_inital <- proc.time()
 no_cores <- detectCores() - 2
 cl <- makeCluster(no_cores, type = "FORK", outfile = "./results/debug.txt")
 clusterSetRNGStream(cl = cl, iseed = 1234)
 
-model2_parallel <- parLapply(cl, 1:l, function(i) {
+Conj_LNNGP_paral <- parLapply(cl, 1:l, function(i) {
   
   t <- proc.time()
   
@@ -94,8 +94,7 @@ model2_parallel <- parLapply(cl, 1:l, function(i) {
 
 stopCluster(cl)
 
-save(file = "./results/conj_LNNGP_parallel.RData",
-     list = c("model2_parallel"))
-
+save(file = "./results/conj_LNNGP_paral.RData",
+     list = c("Conj_LNNGP_paral", "gamma_hat"))
 
 

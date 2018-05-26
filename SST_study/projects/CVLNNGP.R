@@ -160,13 +160,13 @@ for (i in 1:k.fold){
        crps(Y.ho, Y.ho.p@x, sigmasq * D_ho)
 
     k.fold.scores[j, "rmspe"] <- k.fold.scores[j, "rmspe"] + 
-      rmspe(Y.ho, Y.ho.m@x)
+      rmspe(Y.ho, Y.ho.p@x)
     
     cat("\n", i, "th folder,", j, "th phi and deltasq, use time ", 
         (proc.time() - t)[3])
   }
 }
 
-save(file = "./data/data/CVscores1.RData", 
-          list = c("k.fold.scores"))
+save(file = "./results/CVscores1.RData",
+     list = c("k.fold.scores", "phi.deltasq"))
 
