@@ -1,12 +1,11 @@
 # ConjugateNNGP
-This repository contains the code files of the analyses in "Practical Bayesian Inference for Massive Spatial Data On Modest Computing Environments"
+This repository contains the code files of the analyses in "Conjugate Bayesian Modeling for Massive Spatial Datasets On Modest Computing Environments"
 
 Roadmap
 ---------
 |Folder Name |     Intro            |
 |:------ |:----------- |
 |simulation| Univariate simulation studies in section 4|
-|asym_sim|  Simulations in section 4.3 "Comparison of response and latent process models"|
 |SST_study| Sea Surface Temperature (SST) data Analysis |
 
 Authors
