@@ -1,5 +1,4 @@
 setwd("/Users/luzhang/Documents/github/ConjugateNNGP")
-setwd("./simulation/data/simdata")
 rm(list = ls())
 library(fields)
 library(spBayes)
@@ -22,7 +21,7 @@ X_total <- as.matrix(cbind(1, rnorm(N_total)))
 B <- as.matrix(c(1, -5))
 sigma.sq <- 2
 tau.sq <- 0.2
-phi <- 30    
+phi <- 16    
 
 D <- as.matrix(dist(coords_total))
 R <- exp(-phi*D)
@@ -51,8 +50,8 @@ d.max <- max(iDist(coords))
 d.max
 
 v.resid <- variog(coords = coords, data = resid(lm.obj), 
-                  uvec = (seq(0, 0.4*d.max, length = 200)))
-par(mfrow=c(1,1))
+                  uvec = (seq(0, 0.4*d.max, length = 50)))
+par(mfrow = c(1, 1))
 plot(v.resid, xlab="Distance (km)")
 vario.fit <- variofit(v.resid, cov.model="exponential")
 summary(vario.fit)
@@ -69,5 +68,7 @@ mean_w_zero = rep(0, N)
 variofitphi <- 1 / vario.fit$cov.pars[2]
 
 
-save(list = ls(all.names = TRUE), file = "simdata.RData", envir = .GlobalEnv)
+save(list = ls(all.names = TRUE), 
+     file = "./simulation/data/simdata/simdata.RData", 
+     envir = .GlobalEnv)
 
