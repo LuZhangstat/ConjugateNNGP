@@ -6,16 +6,16 @@ Structure
 |   &nbsp;&nbsp;&nbsp;&nbsp;        +-- data: run "datapre" to do simple EDA and save useful data<br />
 |   &nbsp;&nbsp;&nbsp;&nbsp;       +-- buildNN: Build Matrices containing Nearest Neighbor informations for NNGP through<br />
 |<br />
-+-- projects: R code files for response NNGP, model1 and model2.<br />
-|   &nbsp;&nbsp;&nbsp;&nbsp;     +-- samplew_model1.R & samplew_model1.R. <br />
-|   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    code files for sampling latent process by conjugate latent NNGP models<br />
-|   &nbsp;&nbsp;&nbsp;&nbsp;       +-- spNNGPCV.R: code for obtaining point estimates of fixed parameters using cross-validation<br />
-|   &nbsp;&nbsp;&nbsp;&nbsp;       +-- functions.R: functions needed in "samplew_model1&2.R"<br />
-|   &nbsp;&nbsp;&nbsp;&nbsp;       +-- nngp. R: R code for response NNGP, the corresponding stan codes are under folder "src"<br />
++-- projects: R code files for conjugate response NNGP and conjugate latent NNGP.<br />
+|   &nbsp;&nbsp;&nbsp;&nbsp;     +-- Conj_RNNGP.R  <br />
+|   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   code for conjugate response NNGP model
+|   &nbsp;&nbsp;&nbsp;&nbsp;     +-- CVLNNGP.R  <br />
+|   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   code for cross-validation for conjugate latent NNGP model<br />
+|   &nbsp;&nbsp;&nbsp;&nbsp;       +-- Conj_LNNGP_paral.R: code for generating posterior samples of conjugate latent NNGP model <br />
+|   &nbsp;&nbsp;&nbsp;&nbsp;       +-- RMSPE_conj_LNNGP.R: code for calculating RMSPE for conjugate latent NNGP model<br />
+|   &nbsp;&nbsp;&nbsp;&nbsp;       +-- pic.R: code for drawing pictures in Section V<br />
 |<br />
-+-- src: stan code files for conducting response NNGP, model1 and model2<br />
-|<br />
-+-- compare:  Code for calculating KL-D and RMSPE for all models<br />
++-- src: code files for building nearest-neighbor matrices, constructing NNGP approximation and calculaing RMSPE <br />
 
 
 Notes
