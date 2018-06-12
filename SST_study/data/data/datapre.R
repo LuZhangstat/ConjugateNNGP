@@ -1,5 +1,5 @@
-setwd("") # set to the path of ConjugateNNGP
-setwd("SST_study")
+setwd("/Users/luzhang/Documents/github/ConjugateNNGP") # set to the path of ConjugateNNGP
+setwd("./SST_study")
 rm(list = ls())
 
 ## ---------------------------- read in the data ---------------------------- ##
@@ -36,6 +36,7 @@ library(MBA)
 library(fields)
 library(classInt)
 library(RColorBrewer)
+library(sp)
 
 par(mfrow= c(1, 1))
 h <- 12
@@ -70,7 +71,7 @@ plot(SST_train[c("lon", "lat")], cex = 0.1)
 library(rworldmap)
 col.pal <- colorRampPalette(brewer.pal(11,'RdBu')[1:11])
 newmap <- getMap(resolution = "low")
-plot(newmap, xlim = c(-140, -110), ylim = c(20, 60), asp = 1)
+plot(newmap, xlim = c(-140, 0), ylim = c(0, 60), asp = 1)
 colors <- rev(col.pal(101)) 
 zcolor <- colors[(SST_test$sst - min(SST_test$sst)) /
                    diff(range(SST_test$sst))*100 + 1]
@@ -88,16 +89,16 @@ summary(lm.obj)
 coords <- X[, c(2, 3)]
 N <- dim(SST_train)[1]
 set.seed(123)
-subind <- sample.int(N, round(N*0.1))
+subind <- sample.int(N, round(N*0.01))
 
 library(geoR)
 d.max <- sqrt((max(SST_train$projX) - min(SST_train$projX))^2 + 
   (max(SST_train$projY) - min(SST_train$projY))^2)
-d.max
+d.max # around 17,000 KM
 
 t <- proc.time()
 v.resid <- variog(coords = coords[subind, ], data = resid(lm.obj)[subind], 
-                  uvec = (seq(0, 0.5 * d.max, length = 100))) # 30
+                  uvec = (seq(0, 0.5 * d.max, length = 30))) # 30
 proc.time() - t
 
 par(mfrow=c(1,1))
@@ -106,18 +107,18 @@ summary(vario.fit)
 plot(v.resid, xlab = "Distance (1000km)", cex = 0.1)
 lines(vario.fit, col='red') 
 
-
-# size for the mapping of w               
-width <- 10
-height <- 8
+width <- 360
+height <- 360
 pointsize <- 16
-#pdf(paste("./pic/real_em_variog_sub.pdf", sep=""), 
-#    width=width, height=height, pointsize=pointsize, family="Courier")
-plot(v.resid, xlab = "Distance (1000km)", cex = 0.2, ylim = c(-1, 5))
-lines(vario.fit)
+
+png(paste("pic/variogram.png", sep=""), 
+    width = width, height = height, pointsize = pointsize)
+plot(v.resid, xlab = "Distance (1000km)", cex = 0.1)
+lines(vario.fit, col='red') 
 abline(h = c(vario.fit$nugget, vario.fit$nugget + vario.fit$cov.pars[1]))
 abline(v = 3 * vario.fit$cov.pars[2])
-#dev.off()
+dev.off()
+
 
 #---------------------------------- prior -------------------------------------#
 P = 3
@@ -131,31 +132,35 @@ save(list = ls(all.names = TRUE), file = "./data/data/realdata.RData",
 
 
 #---------------------------fit Bayesian linear model--------------------------#
+rm(list = ls())
+library(spBayes)
+load("./data/data/realdata.RData")
 n <- nrow(X)
 p <- 3
 
 set.seed(1234)
 t <- proc.time()
 m.1 <- 
-  bayesLMConjugate(Y~X[, c(2, 3)], n.samples = 1000, 
+  bayesLMConjugate(Y~X[, c(2, 3)], n.samples = 300, 
                    beta.prior.mean = rep(0, times = p),
                    beta.prior.precision = matrix(0, nrow=p, ncol=p),
                    prior.shape = 2, prior.rate = 1)
-summary(m.1$p.beta.tauSq.samples)
+round(summary(m.1$p.beta.tauSq.samples)$statistics, 2)
+round(summary(m.1$p.beta.tauSq.samples)$quantiles, 2)
 proc.time() - t
 
 ## posterior predictive process 
 load("./data/data/SST_test.RData")
-n.samples <- 1000
+n.samples <- 300
 coords.test <- cbind(SST_test$projX, SST_test$projY)
 X.test <- cbind(1, coords.test)
-m.1.pred <- spPredict(m.1, pred.covars=X.test, pred.coords=coords.test,
-                      start=0.5*n.samples)
+m.1.pred <- spPredict(m.1, pred.covars = X.test, pred.coords = coords.test,
+                      start = 1)
 
 y.hat <- apply(m.1.pred$p.y.predictive.samples, 1, mean)
 y.test <- SST_test$sst
 
-RMSPE <- sqrt(sum(y.test - y.hat)^2 / n); RMSPE
+RMSPE <- sqrt(sum((y.test - y.hat)^2) / n); round(RMSPE, 2)
 
 
-
+print(object.size(x=lapply(ls(), get)), units="Mb") 
