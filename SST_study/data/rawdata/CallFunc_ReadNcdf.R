@@ -43,13 +43,12 @@
 #======================================================================
 # Copyright (c) 2012, California Institute of Technology
 #======================================================================
-setwd("") # set to the path of ConjugateNNGP
-setwd("./SST_study")
+setwd("/Users/luzhang/Documents/github/ConjugateNNGP") # set to the path of ConjugateNNGP
 rm(list = ls())
 
 # ****** User Inputs Section ***********              # User inputs entered here
 
-path = "./SST_study/data/rawdata"                     # Enter the data full directory path
+path = "/Users/luzhang/Documents/github/ConjugateNNGP/SST_study/data/rawdata"                     # Enter the data full directory path
 name = "A20171692017176.L3m_8D_SST_sst_4km.nc"        # Enter the filename of the source NetCDF data file
 printFlag = TRUE                                      # Set to TRUE or FALSE if file content listing info is desired
 nOutputElements = 10                                  # number of VarData array elements to output per data variable
@@ -76,8 +75,8 @@ if (printFlag == TRUE) {
 
 # pick data from lon: -140 to -115 and lat: 30 to 60
 
-lat_ind <- which((varData$lat >= 30) & (varData$lat <= 60))
-lon_ind <- which((varData$lon <= -115 & varData$lon > -140))
+lat_ind <- which((varData$lat >= 0) & (varData$lat <= 60))
+lon_ind <- which((varData$lon <= 0 & varData$lon > -140))
 SST_pick <- varData$sst[lon_ind, lat_ind]
 
 # output dataset
@@ -91,5 +90,6 @@ SSTdata <- data.frame(sst = SST_data, lon = lon_data, lat = lat_data,
                            qual_sst = qual_sst_data)
 
 save(SSTdata, file = "../data/SST_data_als.RData")
+
 
 
