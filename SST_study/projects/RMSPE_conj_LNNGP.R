@@ -38,17 +38,17 @@ nn.mod.ho <- nn2(coords.ord, coords_test, k = M)
 nn.mod.ho$NN_distM <- sapply(1:N_test, ho_dist, 
                              nn.mod.ho$nn.idx, coords.ord)
 ## Build matrix C and D
-ind_C.ho_X <- rep(1:N_test, each = M)
-ind_C.ho_Y <- c(t(nn.mod.ho$nn.idx))
+ind_Au_X <- rep(1:N_test, each = M)
+ind_Au_Y <- c(t(nn.mod.ho$nn.idx))
 
 ## obtain A and D using C and N(i)
 AD_ho <- getADstan_ho(neardist = nn.mod.ho$nn.dists,  
                       neardistM = nn.mod.ho$NN_distM, 
                       N = N_test, M = M, phi = phi, deltasq = deltasq) 
-D_ho <- AD_ho[, M + 1]
-C.p <- cbind(X_test, sparseMatrix(ind_C.ho_X, ind_C.ho_Y,
-                                x = c(t(AD_ho[, -(M + 1)]))))
-L.gamma <- dim(C.p)[2]
+D_ho <- AD_ho[M + 1, ]
+Xu_Au <- cbind(X_test, sparseMatrix(ind_Au_X, ind_Au_Y,
+                                    x = as.vector(AD_ho[-(M + 1), ])))
+L.gamma <- dim(Xu_Au)[2]
 proc.time() - t
 
 RMSPEfun <- function(s){
@@ -58,7 +58,7 @@ RMSPEfun <- function(s){
     sigmasq_sim <- Conj_LNNGP_paral[[s]]$pos.p.sigmasq
     tausq_sim <- sigmasq_sim * deltasq
 
-    Y.ho.m <- C.p %*% gamma_sim[1:L.gamma]
+    Y.ho.m <- Xu_Au %*% gamma_sim[1:L.gamma]
     Y.ho.p <- Y.ho.m + rnorm(N_test) * sqrt(sigmasq_sim * D_ho)
     return(list(Y_pred = Y.ho.p@x))
 }
@@ -70,12 +70,10 @@ MSPE <- mean((SST_test[1:N_test, 1] -
                 rowMeans(RMSPEresult))^2)
 RMSPE <- sqrt(MSPE); RMSPE
 
-test_post_mean <- C.p %*% gamma_hat[1:L.gamma]
+test_post_mean <- Xu_Au %*% gamma_hat[1:L.gamma]
 
 save(file = "./results/RMSPEresult.RData",
      list = c("RMSPEresult", "test_post_mean"))
-
-
 
 
 

@@ -2,13 +2,14 @@ setwd("/Users/luzhang/Documents/github/ConjugateNNGP") # set to the path of Conj
 setwd("SST_study")
 rm(list = ls())
 load("./data/buildNN/nngp_10.RData")
-source("./projects/functions.R")
+source("./src/functions.R")
 library(foreach)
 library(doParallel)
 library(parallel)
 
 ## set estimates for phi and deltasq from cross-validation "spConjNNGP" ##
 phi <- 7; deltasq <- 0.001
+delta <- sqrt(deltasq)
 
 a = as; b = bs;
 ind_x <-c(c(rep(2:M, times = 1:(M - 1)), rep(((M + 1) : N), each = M)), 1:N)
@@ -19,7 +20,7 @@ Y.ord <- Y[NN.matrix$ord]
 ## obtain A and D using C and N(i)
 AD <- getADstan(neardist = NN.matrix$NN_dist,  neardistM = NN.matrix$NN_distM, 
                 N = N, M = M, phi = phi) 
-D <- AD[, M + 1]
+D <- AD[M + 1, ]
 
 
 ## generate sparse matrix X** and Y** 
@@ -29,24 +30,23 @@ ind_x_X_up <- c(ind_x_X, 1:N)
 ind_y_X_up <- c(ind_y_X, (P + 1):(N + P))
 
 X_star_up <- 
-  sparseMatrix(ind_x_X_up, ind_y_X_up, x = c(1 / sqrt(deltasq) * c(X.ord),
-                                             rep(1 / sqrt(deltasq), N)))
-X_star_down1 <- 
+  sparseMatrix(ind_x_X_up, ind_y_X_up,
+               x = c(as.vector(X.ord) / delta,
+                     rep(1 / delta, N)))
+
+X_star_down <- 
   sparseMatrix(i = ind_x, j = (ind_y + P), 
-               x = c( - c(t(AD[, 1:M]))[
-                 which(!is.na(t(AD[, 1:M])))], rep(1, N)) )
+               x = c(-na.omit(as.vector(AD[-(M + 1), ])), rep(1, N))) / sqrt(D) 
 
 #Dsqrtinv <- sparseMatrix(i = 1:N, j = 1:N, x = 1 / sqrt(D))
-X_star_down <- X_star_down1 / sqrt(D)
 X_star <- rbind(X_star_up, X_star_down)
-Y_star <- c(Y.ord / sqrt(deltasq), rep(0, N))
+Y_star <- c(Y.ord / delta, rep(0, N))
 
-## get theta = (X**^T X**)^-1 X**^T y** by conjugate gradient ##
+## get theta = (X*^T X*)^-1 X*^T y* by conjugate gradient ##
 t <- proc.time()
-X_Tstar_Y_star <- t(X_star) %*% Y_star
-XTX_star <- t(X_star) %*% X_star
-gamma_hat <- cgsparse(XTX_star[1:(N + P), 1:(N + P)],
-                      X_Tstar_Y_star[1:(N + P)])
+X_Tstar_Y_star <- crossprod(X_star, Y_star)
+XTX_star <- crossprod(X_star, X_star)
+gamma_hat <- cgsparse(XTX_star, X_Tstar_Y_star[1:(N + P)])
 proc.time() - t
 
 ## obtain a* and b* by equation for the posterior IG(a*, b*) for sigmasq ##
@@ -56,13 +56,14 @@ a_star <- a + 0.5 * N
 
 ## storage for posterior samples sigmasq, beta, and w ##
 l <- 300
-
+set.seed(1234)
 t_inital <- proc.time()
 no_cores <- detectCores() - 2
-cl <- makeCluster(no_cores, type = "FORK", outfile = "./results/debug.txt")
+cl <- makeCluster(no_cores, type = "FORK", 
+                  outfile = "./results/conj_LNNGP_debug.txt")
 clusterSetRNGStream(cl = cl, iseed = 1234)
 
-Conj_LNNGP_paral <- parLapply(cl, 1:l, function(i) {
+conj_LNNGP_paral <- parLapply(cl, 1:l, function(i) {
   
   t <- proc.time()
   
@@ -74,10 +75,10 @@ Conj_LNNGP_paral <- parLapply(cl, 1:l, function(i) {
   
   u <- rnorm(2 * N, 0) * sqrt(sigmasq)
   
-  ##ii. get v = (X**T X**)^{-1} X**^Tu$ by conjugate gradient
+  ##ii. get v = (X*T X*)^{-1} X*^Tu$ by conjugate gradient
   
-  X_star_u <- t(X_star) %*% u
-  v <- cgsparse(XTX_star[1: (N + P), 1:(N + P)], X_star_u[1:(N + P)])
+  X_star_u <- crossprod(X_star, u)
+  v <- cgsparse(XTX_star, X_star_u[1:(N + P)])
   
   ##iii. get posterior sample theta = \hat{\theta} + v ##
   sample_theta <- gamma_hat + v
@@ -87,14 +88,13 @@ Conj_LNNGP_paral <- parLapply(cl, 1:l, function(i) {
   cat(" takes time: ", (proc.time() - t)[3])
   cat(" total time: ", (proc.time() - t_inital)[3], "\n")
   
-  return(list(pos.p.sigmasq = sigmasq, pos.p.beta = sample_theta[1:P], 
-    pos.p.w = sample_theta[(P + 1):(N + P)]))
-  
+  return(list(pos.p.sigmasq = sigmasq, pos.p.beta = sample_gamma[1:P],
+    pos.p.w = sample_gamma[(P + 1):(N + P)]))
 })
 
 stopCluster(cl)
 
 save(file = "./results/conj_LNNGP_paral.RData",
-     list = c("Conj_LNNGP_paral", "gamma_hat"))
+     list = c("conj_LNNGP_paral", "gamma_hat"))
 
 
