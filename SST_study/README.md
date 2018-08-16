@@ -6,9 +6,9 @@ Structure
 |   &nbsp;&nbsp;&nbsp;&nbsp;        +-- data: run "datapre" to do simple EDA and save useful data<br />
 |   &nbsp;&nbsp;&nbsp;&nbsp;       +-- buildNN: Build Matrices containing Nearest Neighbor informations for NNGP through<br />
 |<br />
-+-- projects: R code files for conjugate response NNGP and conjugate latent NNGP.<br />
++-- projects: R code files for conjugate response NNGP and conjugate latent NNGP <br />
 |   &nbsp;&nbsp;&nbsp;&nbsp;     +-- Conj_RNNGP.R  <br />
-|   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   code for conjugate response NNGP model
+|   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   code for conjugate response NNGP model <br />
 |   &nbsp;&nbsp;&nbsp;&nbsp;     +-- CVLNNGP.R  <br />
 |   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   code for cross-validation for conjugate latent NNGP model<br />
 |   &nbsp;&nbsp;&nbsp;&nbsp;       +-- Conj_LNNGP_paral.R: code for generating posterior samples of conjugate latent NNGP model <br />
