@@ -10,7 +10,7 @@ Structure
 |  
 |<br />
 +-- src: code files for building nearest-neighbor matrices, constructing NNGP approximation and calculaing RMSPE <br />
-|
+|<br />
 +-- compare:  Code for calculating KL-D and RMSPE for all models<br />
 
 
