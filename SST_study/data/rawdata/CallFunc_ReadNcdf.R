@@ -45,6 +45,7 @@
 #======================================================================
 setwd("/Users/luzhang/Documents/github/ConjugateNNGP") # set to the path of ConjugateNNGP
 rm(list = ls())
+library("RNetCDF")
 
 # ****** User Inputs Section ***********              # User inputs entered here
 

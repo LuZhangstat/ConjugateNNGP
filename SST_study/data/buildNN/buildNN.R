@@ -1,7 +1,7 @@
 setwd("/Users/luzhang/Documents/github/ConjugateNNGP") # set to the path of ConjugateNNGP
 setwd("./SST_study")
 rm(list = ls())
-source("projects/NNMatrix.R")
+source("src/NNMatrix.R")
 load("data/data/realdata.RData")
 
 

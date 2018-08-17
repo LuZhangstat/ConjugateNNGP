@@ -52,30 +52,16 @@ width <- 10
 height <- 8
 pointsize <- 16
 
-#pdf(paste("stan_test_paper_flat/pic/w-compare.pdf", sep=""), 
-#width=width, height=height, pointsize=pointsize, family="Courier")
-#par(mfrow = c(1, 3))
-##Obs
-i <- as.image.SpatialGridDataFrame(surf.raw)
-plot(SSTdata[c("lon", "lat")], typ = "n", cex = 0.5, xlim = xlim, 
-     axes = FALSE, ylab = "latitude", xlab = "longitude", main = "Original") 
-axis(2, las = 1); axis(1)
-image.plot(i, add = TRUE, col = rev(col.pal(length(surf.brks) - 1)), 
-           zlim = zlim, border = "grey50", lwd = 3, legend.mar = 4)
-#dev.off()
 
-plot(SST_train[c("lon", "lat")], cex = 0.1)
-
-
-# plot data on worldmap #
-library(rworldmap)
-col.pal <- colorRampPalette(brewer.pal(11,'RdBu')[1:11])
-newmap <- getMap(resolution = "low")
-plot(newmap, xlim = c(-140, 0), ylim = c(0, 60), asp = 1)
-colors <- rev(col.pal(101)) 
-zcolor <- colors[(SST_test$sst - min(SST_test$sst)) /
-                   diff(range(SST_test$sst))*100 + 1]
-points(SST_test$lon, SST_test$lat, col = zcolor, cex = .1)
+# plot data on worldmap (for fun)#
+# library(rworldmap)
+# col.pal <- colorRampPalette(brewer.pal(11,'RdBu')[1:11])
+# newmap <- getMap(resolution = "low")
+# plot(newmap, xlim = c(-140, 0), ylim = c(0, 60), asp = 1)
+# colors <- rev(col.pal(101))
+# zcolor <- colors[(SST_test$sst - min(SST_test$sst)) /
+#                    diff(range(SST_test$sst))*100 + 1]
+# points(SST_test$lon, SST_test$lat, col = zcolor, cex = .1)
 
 
 
@@ -91,33 +77,23 @@ N <- dim(SST_train)[1]
 set.seed(123)
 subind <- sample.int(N, round(N*0.01))
 
+# Check the variogram 
 library(geoR)
 d.max <- sqrt((max(SST_train$projX) - min(SST_train$projX))^2 + 
   (max(SST_train$projY) - min(SST_train$projY))^2)
 d.max # around 17,000 KM
 
-t <- proc.time()
 v.resid <- variog(coords = coords[subind, ], data = resid(lm.obj)[subind], 
                   uvec = (seq(0, 0.5 * d.max, length = 30))) # 30
-proc.time() - t
 
 par(mfrow=c(1,1))
 vario.fit <- variofit(v.resid, cov.model="exponential")
 summary(vario.fit)
-plot(v.resid, xlab = "Distance (1000km)", cex = 0.1)
-lines(vario.fit, col='red') 
 
-width <- 360
-height <- 360
-pointsize <- 16
-
-png(paste("pic/variogram.png", sep=""), 
-    width = width, height = height, pointsize = pointsize)
 plot(v.resid, xlab = "Distance (1000km)", cex = 0.1)
 lines(vario.fit, col='red') 
 abline(h = c(vario.fit$nugget, vario.fit$nugget + vario.fit$cov.pars[1]))
 abline(v = 3 * vario.fit$cov.pars[2])
-dev.off()
 
 
 #---------------------------------- prior -------------------------------------#
@@ -162,5 +138,4 @@ y.test <- SST_test$sst
 
 RMSPE <- sqrt(sum((y.test - y.hat)^2) / n); round(RMSPE, 2)
 
-
-print(object.size(x=lapply(ls(), get)), units="Mb") 
+print(object.size(x = lapply(ls(), get)), units = "Mb") 
